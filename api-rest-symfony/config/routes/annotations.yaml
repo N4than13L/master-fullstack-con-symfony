@@ -5,14 +5,3 @@ controllers:
 kernel:
     resource: ../../src/Kernel.php
     type: annotation
-
-# Rutas para controlador de usuarios
-user:
-    path: /usuario
-    controller: App\Controller\UserController::index
-
-# Rutas para controlador de video
-video:
-    path: /video
-    controller: App\Controller\VideoController::index
-    
