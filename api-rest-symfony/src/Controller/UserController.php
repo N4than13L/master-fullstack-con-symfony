@@ -181,5 +181,22 @@ class UserController extends AbstractController
         return new JsonResponse($data);
     }
 
+    public function edit(Request $request){
+        // Recoger la cabezera de autenticacion
+
+        // crear un metodo para ver si es correcto el token
+
+        // Y si es correcto, hacer la actualizacion del uuario 
+
+        // ...
+
+        $data = [
+            'status' => 'error',
+            'message' => 'Metodo para editar'
+        ];
+
+        return new JsonResponse($data);
+    }
+
 
 }
