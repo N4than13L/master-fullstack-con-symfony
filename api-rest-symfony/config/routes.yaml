@@ -1,6 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+
 user:
   path: user
   controller: App\Controller\UserController::index
@@ -8,3 +10,14 @@ user:
 video:
   path: video
   controller: App\Controller\VideoController::index
+
+
+register:
+  path: /register
+  controller: App\Controller\UserController::create
+  methods: [POST]
+
+login:
+  path: /login
+  controller: App\Controller\UserController::login
+  methods: [POST]

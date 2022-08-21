@@ -62,11 +62,15 @@ class Video
      * @ORM\Column(name="updated_at", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $updatedAt = 'CURRENT_TIMESTAMP';
+    
+    //metodo removido.
+    //InvertedBy="videos"
+
 
     /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", InvertedBy="videos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
