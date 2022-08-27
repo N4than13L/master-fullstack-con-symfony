@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints\Email;
 
-
 class UserController extends AbstractController
 {
     /**
@@ -181,22 +180,89 @@ class UserController extends AbstractController
         return new JsonResponse($data);
     }
 
-    public function edit(Request $request){
+    public function edit(Request $request, JwtAuth $jwt_auth){
         // Recoger la cabezera de autenticacion
+        $token = $request->headers->get('Authorization');
 
         // crear un metodo para ver si es correcto el token
-
-        // Y si es correcto, hacer la actualizacion del uuario 
-
-        // ...
-
+        $authCheck = $jwt_auth->checkToken($token);
+        
+        // Respuesta por defecto.
         $data = [
             'status' => 'error',
-            'message' => 'Metodo para editar'
+            'code' => '404',
+            'message' => 'Usuario no actualizado'
         ];
+
+        // Y si es correcto, hacer la actualizacion del uuario 
+        if($authCheck){
+            // Actualizar el usuario.
+
+            // Conseguir entity manager.
+            $em = $this->getDoctrine()->getManager();
+
+            // Conseguir los datos del usuario identificado.
+            $identity  = $jwt_auth->checkToken($token, true);            
+
+            // Conseguir el usuario a actualizar
+            $user_repo = $this->getDoctrine()->getRepository(User::class);
+            $user = $user_repo->findOneBy([
+                'id' => $identity->sub
+            ]);
+
+            // Recoger datos por POST.
+            $json = $request->get('json', null);
+            $params = json_decode($json);
+
+            // Comprobar y validar lo datos. 
+            if(!empty($json)){
+                $name = (!empty($params->name)) ? $params->name : null;
+                $surname = (!empty($params->surname)) ? $params->surname : null;
+                $email =  (!empty($params->email)) ? $params->email : null;
+
+                $validator = Validation::createValidator();
+                $validate_email = $validator->validate($email, [
+                    new Email()
+                ]);
+
+                if (!empty($email) && count($validate_email) == 0  && !empty($name) && !empty($surname) ){
+                    // Asignar nuevo datos al obj de usuario.
+                    $user->setName($name);
+                    $user->setSurname($surname);
+                    $user->setEmail($email);
+
+                    
+
+                    // Comprobar duplicados.
+                    $isset_user =$user_repo->findBy([
+                        'email' => $email
+                    ]);
+
+                    if(count($isset_user) == 0 || $identity->email == $email){
+                        // guardar datos en la db.
+                        $em->persist($user);
+                        $em->flush();
+
+                        $data = [
+                            'status' => 'success',
+                            'code' => '200',
+                            'message' => 'usuario actualizado con exito',
+                            'user' => $user
+                        ];
+
+                    }else{
+                        $data = [
+                            'status' => 'error',
+                            'code' => 404,
+                            'message' => 'Usuario ya existe'
+                        ];
+                    }
+                
+                }
+        }        
 
         return new JsonResponse($data);
     }
 
-
+    }
 }

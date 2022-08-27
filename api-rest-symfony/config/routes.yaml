@@ -3,6 +3,7 @@
 #    controller: App\Controller\DefaultController::index
 
 
+# Rutas del A.P.I
 user:
   path: user
   controller: App\Controller\UserController::index
@@ -27,3 +28,10 @@ user_edit:
   path: /user/edit
   controller: App\Controller\UserController::edit
   methods: [PUT]
+
+#Ruta para los video
+
+video_new:
+  path: /video/new
+  controller: App\Controller\VideoController::createVideo
+  methods: [POST]
