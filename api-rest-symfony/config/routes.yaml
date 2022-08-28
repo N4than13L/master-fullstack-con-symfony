@@ -4,6 +4,7 @@
 
 
 # Rutas del A.P.I
+# Mas bien del usuario aqui. 
 user:
   path: user
   controller: App\Controller\UserController::index
@@ -30,7 +31,6 @@ user_edit:
   methods: [PUT]
 
 #Ruta para los video
-
 video_new:
   path: /video/new
   controller: App\Controller\VideoController::createVideo
@@ -40,3 +40,15 @@ video_list:
   path: /videos/list
   controller: App\Controller\VideoController::videos
   methods: [GET]
+
+video_detail:
+  path: /video/detail/{id}
+  controller: App\Controller\VideoController::detail
+  methods: [GET]
+
+video_remove:
+  path: /video/remove/{id}
+  controller: App\Controller\VideoController::remove
+  methods: [DELETE]
+
+  
