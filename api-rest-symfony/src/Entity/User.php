@@ -68,6 +68,7 @@ class User implements \JsonSerializable
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="user")
      */
+    
     private $videos;
     
     public function __construct(){
