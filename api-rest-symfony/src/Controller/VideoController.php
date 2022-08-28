@@ -32,7 +32,7 @@ class VideoController extends AbstractController
         ]);
     }
 
-    public function createVideo(Request $request, JwtAuth $jwt_auth){
+    public function createVideo(Request $request, JwtAuth $jwt_auth, $id = null){
         $data = array(
             'status' => 'error',
             'code' => 404,
@@ -63,40 +63,65 @@ class VideoController extends AbstractController
             if(!empty($user_id) && !empty($title)){
                 // Guardar el nuevo video favorito en la db.
                 $em = $this->getDoctrine()->getManager();
-                
                 $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
                     'id' => $user_id
                 ]);
 
-                $video = new Video();
-                $video->setUser($user);
-                $video->setTitle($title);
-                $video->setDescription($description);
-                $video->setUrl($url);
-                $video->setStatus('normal');
+                if($id == null){
+                    $video = new Video();
+                    $video->setUser($user);
+                    $video->setTitle($title);
+                    $video->setDescription($description);
+                    $video->setUrl($url);
+                    $video->setStatus('normal');
 
-                $created_at = new DateTime('now');
-                $updated_at = new DateTime('now');
+                    $created_at = new DateTime('now');
+                    $updated_at = new DateTime('now');
 
-                $video->setCreatedAt($created_at);
-                $video->setUpdatedAt($updated_at);
+                    $video->setCreatedAt($created_at);
+                    $video->setUpdatedAt($updated_at);
 
-                // Guardar en db.
-                $em->persist($video);
-                $em->flush();
+                    // Guardar en db.
+                    $em->persist($video);
+                    $em->flush();
 
-                // devolver una respuesta.
-                $data = array(
-                    'status' => 'success',
-                    'code' => 200,
-                    'message' => 'Video guardado exitosamente',
-                    'video' => $video
-                );
-                
+                    // devolver una respuesta.
+                    $data = array(
+                        'status' => 'success',
+                        'code' => 200,
+                        'message' => 'Video guardado exitosamente',
+                        'video' => $video
+                    );
+                }else{
+                    $video =  $this->getDoctrine()->getRepository(Video::class)->findOneBy([
+                        'id' => $id,
+                        'user' => $identity->sub
+                    ]);
+
+                    if($video && is_object($video)){
+                        $video->setTitle($title);
+                        $video->setDescription($description);
+                        $video->setUrl($url);
+                        $video->setStatus('normal');
+
+                        $updated_at = new DateTime('now');
+
+                        $video->setCreatedAt($created_at);
+                        $video->setUpdatedAt($updated_at);
+
+                        $em->persist($video);
+                        $em->flush();
+
+                        $data = [
+                            'status' => 'success',
+                            'code' => 200,
+                            'message' => 'video actualizado',
+                            'video' => $video
+                        ];
+                    }
+                }
             }
-
         } 
-
     }
 
         return $this->json($data);
@@ -223,7 +248,7 @@ class VideoController extends AbstractController
             }
         }
 
-            return $this->json($data);
+        return $this->json($data);
 
     }
 

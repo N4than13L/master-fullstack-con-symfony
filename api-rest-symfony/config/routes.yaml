@@ -13,7 +13,6 @@ video:
   path: video
   controller: App\Controller\VideoController::index
 
-
 register:
   path: /register
   controller: App\Controller\UserController::create
@@ -23,7 +22,6 @@ login:
   path: /login
   controller: App\Controller\UserController::login
   methods: [POST]
-
 
 user_edit:
   path: /user/edit
@@ -45,6 +43,11 @@ video_detail:
   path: /video/detail/{id}
   controller: App\Controller\VideoController::detail
   methods: [GET]
+
+video_edit:
+  path: /video/edit/{id}
+  controller: App\Controller\UserController::createVideo
+  methods: [PUT]
 
 video_remove:
   path: /video/remove/{id}
