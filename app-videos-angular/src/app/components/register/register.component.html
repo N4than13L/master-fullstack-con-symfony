@@ -1,4 +1,45 @@
 <div class="container-fluid mt-3">
     <h1>{{Pagetitle}}</h1>
     <hr />
+
+    <form class="col-md-5 ml-0 pl-0" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+        <div class="from-group">
+            <label for="name">nombre:</label>
+            <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="user.name" required
+                pattern="[a-zA-Z]" />
+            <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
+                nombre no debe ser vacio o es invalido
+            </small>
+        </div>
+
+        <div class="from-group">
+            <label for="surname">apellido:</label>
+            <input type="text" class="form-control" name="surname" #surname="ngModel" [(ngModel)]="user.surname"
+                required pattern="[a-zA-Z]" />
+            <small *ngIf="!surname.valid && surname.touched" class="invalid-feedback d-block">
+                los apellidos no deben estar vacios o es invalido
+            </small>
+        </div>
+
+
+        <div class="from-group">
+            <label for="email">email:</label>
+            <input type="text" class="form-control" name="email" #email="ngModel" [(ngModel)]="user.email" required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+            <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">
+                email incorecto
+            </small>
+        </div>
+
+        <div class="from-group">
+            <label for="contrasena">contrasena:</label>
+            <input type="password" class="form-control" name="contrasena" #contrasena="ngModel"
+                [(ngModel)]="user.password" required />
+            <small *ngIf="!contrasena.valid && contrasena.touched" class="invalid-feedback d-block">
+                la contrasena no debe estar vacia
+            </small>
+        </div>
+
+        <input type="submit" value="registrame" class="btn btn-success mt-3" [disabled]="registerForm.invalid" />
+    </form>
 </div>
