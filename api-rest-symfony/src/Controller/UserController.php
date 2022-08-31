@@ -110,8 +110,8 @@ class UserController extends AbstractController
                     $em->flush();
 
                     $data = [
-                        'status' => 'error',
-                        'code' => '200',
+                        'status' => 'success',
+                        'code' => 200,
                         'message' => "usuario creado exitosamente",
                         'user' => $user
                     ];
