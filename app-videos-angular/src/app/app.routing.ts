@@ -6,6 +6,8 @@ import { RegisterComponent } from "./components/register/register.component"
 import { HomeComponent } from "./components/home/home.component"
 import { ErrorComponent } from "./components/error/error.component"
 
+import { UserEditComponent } from "./components/user-edit/user-edit.component"
+import { VideoNewwComponent } from "./components/video-neww/video-neww.component"
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -13,6 +15,8 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'logout/:sure', component: LoginComponent },
     { path: 'registro', component: RegisterComponent },
+    { path: 'ajustes', component: UserEditComponent },
+    { path: 'video-favorito', component: VideoNewwComponent },
     { path: 'error', component: ErrorComponent },
     { path: '**', component: ErrorComponent }
 ]

@@ -12,6 +12,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 
 import { FormsModule } from '@angular/forms';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { VideoNewwComponent } from './components/video-neww/video-neww.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     ErrorComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    UserEditComponent,
+    VideoNewwComponent
   ],
   imports: [
     BrowserModule,
