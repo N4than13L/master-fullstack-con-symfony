@@ -122,9 +122,10 @@ class VideoController extends AbstractController
                 }
             }
         } 
+        return new jsonResponse($data);
     }
 
-        return $this->json($data);
+        
     }
 
 

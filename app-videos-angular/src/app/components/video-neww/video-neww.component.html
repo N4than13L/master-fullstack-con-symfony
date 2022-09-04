@@ -2,4 +2,47 @@
     <h1>{{Pagetitle}}</h1>
     <hr />
 
+
+
+    <div class="alert alert-success col-md-5 mt-3" *ngIf="status == 'success'">
+        Has actualizado tus tados
+    </div>
+    <div class="alert alert-danger col-md-5 mt-3" *ngIf="status == 'error'">
+        Upps algo anda mal.
+    </div>
+
+    <form class="col-md-5 ml-0 pl-0" #videosForm="ngForm" (ngSubmit)="onSubmit(videosForm)">
+        <div class="form-group">
+            <label for="titulo">Titulo:</label>
+            <input type="text" name="titulo" class="form-control" #titulo="ngModel" [(ngModel)]="video.titulo"
+                required />
+
+            <small *ngIf="!titulo.valid && titulo.touched" class="invalid-feedback d-block">
+                El titulo no es valido
+            </small>
+
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripcion:</label>
+            <textarea name="descripcion" class="form-control" #descripcion="ngModel" [(ngModel)]="video.description"
+                required></textarea>
+
+            <small *ngIf="!descripcion.valid && descripcion.touched" class="invalid-feedback d-block">
+                La Descripcion no es valida
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="url">Url de video:</label>
+            <input type="email" name="url" class="form-control" #url="ngModel" [(ngModel)]="video.email" required />
+
+            <small *ngIf="!url.valid && url.touched" class="invalid-feedback d-block">
+                La url no es valida
+            </small>
+        </div>
+
+        <input type="submit" value="Guardar" class="btn btn-success mt-3" [disabled]="videosForm.invalid" />
+    </form>
+
 </div>
